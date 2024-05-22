@@ -57,14 +57,13 @@ def fill_form(row):
         submit_button = driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[3]/div[1]/div[1]/div/span/span')
         submit_button.click()
 
-        # Optionally, wait for a success message or redirection
+        # Wait for a success message or redirection
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, '//div[contains(text(), "Your response has been recorded.")]'))
         )
-
+        print(f"Form submitted successfully for row: {row['name']}")
     except Exception as e:
-        print(f"An error occurred: {e}")
-
+        print(f"Form submission unsuccessful for row: {row['name']}. Error: {e}")
     finally:
         driver.quit()
 

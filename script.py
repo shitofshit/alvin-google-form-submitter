@@ -4,17 +4,24 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
+import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Define the form URL
 form_url = input("Input Google Form URL here: ")
 
-# Load the Excel file
-current_dir = os.path.dirname(os.path.realpath(__file__))
-excel_file_path = os.path.join(current_dir, 'data.xlsx')
+# Adjust the path setup to ensure the data.xlsx is loaded correctly
+if getattr(sys, 'frozen', False):
+    # If the application is run as a standalone executable
+    application_path = os.path.dirname(os.path.dirname(sys.executable))
+else:
+    # If the application is run from a script
+    application_path = os.path.dirname(os.path.abspath(__file__))
+
+# Define the path to the Excel file
+excel_file_path = os.path.join(application_path, 'data.xlsx')
 df = pd.read_excel(excel_file_path)
 
-# Define the function to fill the form
 def fill_form(row):
     driver = webdriver.Chrome()
 
